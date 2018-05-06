@@ -15,6 +15,7 @@
 		B090F1651CC6584900CA05EF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B090F1631CC6584900CA05EF /* Main.storyboard */; };
 		B090F1671CC6584900CA05EF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B090F1661CC6584900CA05EF /* Assets.xcassets */; };
 		B090F16A1CC6584900CA05EF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B090F1681CC6584900CA05EF /* LaunchScreen.storyboard */; };
+		B0B455A4209F54BE006940FD /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B0B455A3209F54BD006940FD /* Default-568h@2x.png */; };
 		B0D567E5204673030067583D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B0D567E7204673030067583D /* InfoPlist.strings */; };
 /* End PBXBuildFile section */
 
@@ -29,6 +30,7 @@
 		B090F1661CC6584900CA05EF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B090F1691CC6584900CA05EF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B090F16B1CC6584900CA05EF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B0B455A3209F54BD006940FD /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		B0D567E1204672880067583D /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Main.strings; sourceTree = "<group>"; };
 		B0D567E2204672880067583D /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		B0D567E6204673030067583D /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -57,6 +59,7 @@
 		B090F1531CC6584900CA05EF = {
 			isa = PBXGroup;
 			children = (
+				B0B455A3209F54BD006940FD /* Default-568h@2x.png */,
 				B0D567E7204673030067583D /* InfoPlist.strings */,
 				B090F15E1CC6584900CA05EF /* RCalculator */,
 				B090F15D1CC6584900CA05EF /* Products */,
@@ -153,6 +156,7 @@
 				B090F1671CC6584900CA05EF /* Assets.xcassets in Resources */,
 				B090F1651CC6584900CA05EF /* Main.storyboard in Resources */,
 				B066E2FB1CCB5AD500759622 /* Let's go Digital Regular.ttf in Resources */,
+				B0B455A4209F54BE006940FD /* Default-568h@2x.png in Resources */,
 				B066E2FA1CCB5AD500759622 /* Icon in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -318,7 +322,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "0e2b1bc0-c4fd-4bc3-9f49-5f0f85ff3178";
 				PROVISIONING_PROFILE_SPECIFIER = RCalDist;
-				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
@@ -337,7 +341,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "0e2b1bc0-c4fd-4bc3-9f49-5f0f85ff3178";
 				PROVISIONING_PROFILE_SPECIFIER = RCalDist;
-				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
 			};
 			name = Release;

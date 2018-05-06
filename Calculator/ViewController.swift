@@ -14,64 +14,64 @@ class ViewController: UIViewController {
     var resultLabel = UILabel()
     let xButtonCount = 4    //1行に配置するボタンの数
     let yButtonCount = 6    //1列に配置するボタンの数
-    var number1:NSDecimalNumber = 0.0    //入力数値を格納する変数１
-    var number2:NSDecimalNumber = 0.0    //入力数値を格納する変数２
+    var number1: NSDecimalNumber = 0.0    //入力数値を格納する変数１
+    var number2: NSDecimalNumber = 0.0    //入力数値を格納する変数２
     //var number3:NSDecimalNumber = 0.0   //メモリーキーに格納する変数３
-    var result:NSDecimalNumber = 0.0     //計算結果を格納する変数
-    var operatorId:String = ""  //演算子を格納する変数
+    var result: NSDecimalNumber = 0.0     //計算結果を格納する変数
+    var operatorId: String = ""  //演算子を格納する変数
+    
     
 ////////////////////////////////////////////////////////////////////////////////////////////////
     override func viewDidLoad() {
         super.viewDidLoad()
-        //画面の背景色を設定
-        self.view.backgroundColor = UIColor(hexString: "#232321") //hexString値でも指定できるようにした0219
+        //画面の背景色を設定(hexString値）
+        self.view.backgroundColor = UIColor(hexString: "#232321")
         //画面の横幅を格納するメンバ変数
-        let screenWidth:Double = Double(UIScreen.main.bounds.size.width)
+        let screenWidth: Double = Double(UIScreen.main.bounds.size.width)
         //画面の縦幅
-        let screenHeight:Double = Double(UIScreen.main.bounds.size.height)
+        let screenHeight: Double = Double(UIScreen.main.bounds.size.height)
         //ボタン間の余白（横）
         let buttonMargin = 12.0
-        //ボタン間の余白（縦）＆
+        //ボタン間の余白（縦）
         let buttonMarginHeight = 20.0
     
-        
-        //計算結果エリアの縦幅を宣言（）
-        var resultArea = 0.0
+        //計算結果エリアの縦幅
+        var resultArea: Double = 0.0
         //画面全体の縦幅に応じて計算結果表示エリアの縦幅を決定
         switch screenHeight {
         case 480:
-            resultArea = 200.0
+            resultArea = 90.0 //iPhone,3G,4S
         case 568:
-            resultArea = 110.0
+            resultArea = 110.0 //iphone5,SE
         case 667:
-            resultArea = 300.0
+            resultArea = 150.0 //iPhone6
         case 736:
-            resultArea = 350.0
+            resultArea = 180.0 //iPhone8 Plus
         default:
             resultArea = 0.0
         }
-        //計算結果ラベルのフレームを設定
-        resultLabel.frame = CGRect(x:10, y:20, width:screenWidth-20, height:resultArea-20)
-        //計算結果ラベルの背景色を設定
-        //resultLabel.backgroundColor = UIColor.grayColor()
-        resultLabel.backgroundColor = self.colorWithRGBHex(0xF5F5DC, alpha: 1.0)
-        //計算結果ラベルのフォントと文字サイズを設定
-        resultLabel.font = UIFont(name: "Helvetica", size: 80)
-        //計算結果ラベルのアラインメントを右揃えに設定
-        resultLabel.textAlignment = NSTextAlignment.right
-        //計算結果ラベルの表示行数を4行に設定
-        resultLabel.numberOfLines = 4
-        //計算結果ラベルの初期値を"0"に設定
-        resultLabel.text = "0"
         
-        //resultLabelの土台（外枠）ラベルを設置（先に設置した方が背面となる）0129
+        
+        /*計算結果ラベルの設定*/
+        //フレームを設定
+        resultLabel.frame = CGRect(x:10, y:20, width:screenWidth-20, height:resultArea-20)
+        //背景色を設定
+        resultLabel.backgroundColor = self.colorWithRGBHex(0xF5F5DC, alpha: 1.0)
+        //フォントと文字サイズを設定
+        resultLabel.font = UIFont(name: "Helvetica", size: 80)
+        //右揃えに設定
+        resultLabel.textAlignment = NSTextAlignment.right
+        //表示行数を4行に設定
+        resultLabel.numberOfLines = 4
+        //初期値を0に設定
+        resultLabel.text = "0"
+        //resultLabelの土台（外枠）ラベルを設置（先に設置した方が背面となる）
         resultOutLabel.backgroundColor = self.colorWithRGBHex(0xF5F5DC, alpha: 1.0)
         resultOutLabel.frame = CGRect(x:0, y:20, width:screenWidth, height:resultArea-20)
         self.view.addSubview(resultOutLabel)
-        
-        
         //計算結果ラベルをViewControllerクラスのviewに設置
         self.view.addSubview(resultLabel)
+        
         
         //ボタンのラベルタイトルを配列で用意
         let buttonLabels = [
@@ -85,13 +85,13 @@ class ViewController: UIViewController {
         "0","",".","",
         ]
         
+        
         //数字ボタンを作成
         for y in 2 ..< yButtonCount-1 {
             for x in 0 ..< xButtonCount-1 {
                 //計算機のボタンを作成
                 let button = UIButton()
                 //ボタンタイトルのフォントサイズ
-                //button.titleLabel?.font = UIFont.systemFont(ofSize: 22)
                 button.titleLabel!.font = UIFont(name: "Helvetica-Bold",size: CGFloat(23))
                 //ボタンの横幅サイズ作成
                 let buttonWidth = (screenWidth - (buttonMargin * (Double(xButtonCount)+1))) / Double(xButtonCount)
@@ -108,6 +108,7 @@ class ViewController: UIViewController {
                 //ボタン背景をグラデーション色設定
                 let gradient = CAGradientLayer()
                 gradient.frame = button.bounds
+                
                 let arrayColors = [colorWithRGBHex(0xFFFFFF, alpha: 0.2).cgColor as AnyObject,
                                    colorWithRGBHex(0x000000, alpha: 1.0).cgColor as AnyObject]
                 gradient.colors = arrayColors
@@ -124,13 +125,14 @@ class ViewController: UIViewController {
                 //ボタンのラベルタイトルを設定
                 button.setTitle(buttonLabels[buttonNumber], for:UIControlState())
                 //ボタンタップ時のアクション設定
-                button.addTarget(self, action: #selector(ViewController.buttonTapped(_:)), for: UIControlEvents.touchUpInside)
+                button.addTarget(self, action: #selector(buttonTapped(_:)), for: UIControlEvents.touchUpInside)
                 //ボタン配置
                 self.view.addSubview(button)
             }
         }
 
-        //数字ボタン0(Zero)を作成
+        
+        //数字ボタン0を作成
         let button = UIButton()
         //ボタンタイトルのフォントサイズ
         button.titleLabel!.font = UIFont(name: "Helvetica-Bold",size: CGFloat(23))
@@ -162,13 +164,14 @@ class ViewController: UIViewController {
         //ボタンのラベルタイトルを設定
         button.setTitle(buttonLabels[buttonZeroNumber], for:UIControlState())
         //ボタンタップ時のアクション設定
-        button.addTarget(self, action: #selector(ViewController.buttonTapped(_:)), for: UIControlEvents.touchUpInside)
+        button.addTarget(self, action: #selector(buttonTapped(_:)), for: UIControlEvents.touchUpInside)
         //ボタン配置
         self.view.addSubview(button)
         //ボタンテキスト0を左揃え
         button.contentHorizontalAlignment = UIControlContentHorizontalAlignment.left
         button.titleEdgeInsets = UIEdgeInsetsMake(0, 26, 0, 0)   // タイトルに余白をつける
 
+        
         
         //数字ボタン"."(Point)を作成
         let buttonPoint = UIButton()
@@ -202,9 +205,10 @@ class ViewController: UIViewController {
         //ボタンのラベルタイトルを設定
         buttonPoint.setTitle(buttonLabels[buttonPointNumber], for:UIControlState())
         //ボタンタップ時のアクション設定
-        buttonPoint.addTarget(self, action: #selector(ViewController.buttonTapped(_:)), for: UIControlEvents.touchUpInside)
+        buttonPoint.addTarget(self, action: #selector(buttonTapped(_:)), for: UIControlEvents.touchUpInside)
         //ボタン配置
         self.view.addSubview(buttonPoint)
+        
         
         
         //演算ボタンを作成
@@ -244,11 +248,14 @@ class ViewController: UIViewController {
                 //ボタンのラベルタイトルを設定
                 buttonOperator.setTitle(buttonLabels[buttonNumber], for:UIControlState())
                 //ボタンタップ時のアクション設定
-                buttonOperator.addTarget(self, action: #selector(ViewController.buttonTapped(_:)), for: UIControlEvents.touchUpInside)
+                buttonOperator.addTarget(self, action: #selector(buttonTapped(_:)), for: UIControlEvents.touchUpInside)
                 //ボタン配置
                 self.view.addSubview(buttonOperator)
             }
         }
+        
+        
+        
         //演算ボタンの-と+を作成（無理やり）
         for y in 2 ..< 4 {
             let buttonOperator = UIButton()
@@ -278,11 +285,13 @@ class ViewController: UIViewController {
             //ボタンのラベルタイトルを設定
             buttonOperator.setTitle(buttonLabels[buttonNumber], for:UIControlState())
             //ボタンタップ時のアクション設定
-            buttonOperator.addTarget(self, action: #selector(ViewController.buttonTapped(_:)), for: UIControlEvents.touchUpInside)
+            buttonOperator.addTarget(self, action: #selector(buttonTapped(_:)), for: UIControlEvents.touchUpInside)
             //ボタン配置
             self.view.addSubview(buttonOperator)
         }
 
+        
+        
         //等号ボタンを作成
         let buttonEqual = UIButton()
         //ボタンタイトルのフォントサイズ
@@ -311,7 +320,7 @@ class ViewController: UIViewController {
         //ボタンのラベルタイトルを設定
         buttonEqual.setTitle(buttonLabels[buttonNumber], for:UIControlState())
         //ボタンタップ時のアクション設定
-        buttonEqual.addTarget(self, action: #selector(ViewController.buttonTapped(_:)), for: UIControlEvents.touchUpInside)
+        buttonEqual.addTarget(self, action: #selector(buttonTapped(_:)), for: UIControlEvents.touchUpInside)
         //ボタン配置
         self.view.addSubview(buttonEqual)
         
@@ -348,21 +357,21 @@ class ViewController: UIViewController {
                 //ボタンのテキストカラーを設定
                 buttonMemory.setTitleColor(UIColor.white, for:UIControlState())
                 buttonMemory.setTitleColor(UIColor.gray, for:UIControlState.highlighted)
-                
                 //ボタンのラベルタイトルを取り出すインデックス番号
                 let buttonNumber = y * xButtonCount + x
                 //ボタンのラベルタイトルを設定
                 buttonMemory.setTitle(buttonLabels[buttonNumber], for:UIControlState())
                 //ボタンタップ時のアクション設定
-                buttonMemory.addTarget(self, action: #selector(ViewController.buttonTapped(_:)), for: UIControlEvents.touchUpInside)
+                buttonMemory.addTarget(self, action: #selector(buttonTapped(_:)), for: UIControlEvents.touchUpInside)
                 //ボタン配置
                 self.view.addSubview(buttonMemory)
             }
         }
     }
     
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
+    
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //ボタンがタップされた時のメソッド（計算処理など）
     @objc func buttonTapped(_ sender:UIButton) {
         let tappedButtonTitle:String = sender.currentTitle!
@@ -387,14 +396,15 @@ class ViewController: UIViewController {
             clearButtonTapped(tappedButtonTitle)
         }
     }
+    
+    
     func numberButtonTapped(_ tappedButtonTitle:String) {
         print("数字ボタンタップ：\(tappedButtonTitle)")
         //タップされた数字タイトルを計算できるようにNSDecimalNumber型に変換
         let tappedButtonNum:NSDecimalNumber = NSDecimalNumber(string:tappedButtonTitle)
         //入力されていた値を10倍にして1桁大きくして、その変換した数値を加算
         number1 = number1.multiplying(by: NSDecimalNumber(string: "10")).adding(tappedButtonNum)
-        
-        //number1をカンマ区切りに変換0219
+        //number1をカンマ区切りに変換
         let formatter = NumberFormatter()
         formatter.numberStyle = NumberFormatter.Style.decimal
         formatter.groupingSeparator = ","
@@ -404,6 +414,8 @@ class ViewController: UIViewController {
         //計算結果ラベルに表示
         //resultLabel.text = number1.stringValue
     }
+    
+    
     func operatorButtonTapped(_ tappedButtonTitle:String) {
         print("演算子ボタンタップ：\(tappedButtonTitle)")
         operatorId = tappedButtonTitle
@@ -411,6 +423,8 @@ class ViewController: UIViewController {
         number1 = NSDecimalNumber(string: "0")
         //等号ボタンを押さずに、続けて演算子ボタンを押しても計算できるようにコードを記述する必要がある
     }
+    
+    
     func equalButtonTapped(_ tappedButtonTitle:String) {
         print("等号ボタンタップ：\(tappedButtonTitle)")
         switch operatorId {
@@ -443,6 +457,8 @@ class ViewController: UIViewController {
         //計算結果ラベルに表示
         //resultLabel.text = String("\(result)")
     }
+    
+    
     func clearButtonTapped(_ tappedButtonTitle:String) {
         print("クリアボタンタップ：\(tappedButtonTitle)")
         number1 = NSDecimalNumber(string:"0")
@@ -453,7 +469,6 @@ class ViewController: UIViewController {
     }
     
 
-    
     //HEX値で設定するためのメソッド
     func colorWithRGBHex(_ hex: Int, alpha: Float = 1.0) -> UIColor {
         let r = Float((hex >> 16) & 0xFF)
@@ -461,6 +476,7 @@ class ViewController: UIViewController {
         let b = Float((hex) & 0xFF)
         return UIColor(red: CGFloat(r / 255.0), green: CGFloat(g / 255.0), blue: CGFloat(b / 255.0), alpha: CGFloat(alpha))
     }
+    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
