@@ -378,6 +378,7 @@ class ViewController: UIViewController {
     }
     
     
+    
     ///////////////////////////////////////////////////////////////////
     // 各種メソッド
     ///////////////////////////////////////////////////////////////////
@@ -387,21 +388,21 @@ class ViewController: UIViewController {
         print("\(tappedButtonTitle)ボタンが押されました！")
         //ボタンのタイトルで条件分岐
         switch tappedButtonTitle {
-        case "0","1","2","3","4","5","6","7","8","9":   //数字ボタン
+        case "0","1","2","3","4","5","6","7","8","9":
             numberButtonTapped(tappedButtonTitle)
-        case "×","-","+","÷":                           //演算子ボタン
+        case "×","-","+","÷":
             operatorButtonTapped(tappedButtonTitle)
-            //case "+/-":                                     //正負ボタン（表示してある数字を正数にしたり負数にしたり）
+            //case "+/-":
         //plusMinusButtonTapped(tappedButtonTitle)
-        case "=":                                       //等号ボタン
+        case "=":
             equalButtonTapped(tappedButtonTitle)
-            //case "m+","m-":                                 //メモリー演算ボタン（直前の計算結果をメモリーに足す・引く）
-            //memoryOperatorButtonTapped(tappedButtonTitle)
-            //case "mr";                                      //メモリーリコールボタン（これまでのメモリー計算の結果を呼び出す）
-            //memoryRecallButtonTapped(tappedButtonTitle)
-            //case "mc":                                      //メモリークリアボタン
-        //memoryClearButtonTappled(tappedButtonTitle)
-        default:                                            //クリアボタン
+//        case "m+","m-": //メモリー演算ボタン（直前の計算結果をメモリーに足す・引く）
+//            memoryOperatorButtonTapped(tappedButtonTitle)
+//        case "mr": //メモリーリコールボタン（これまでのメモリー計算の結果を呼び出す）
+//            memoryRecallButtonTapped(tappedButtonTitle)
+//        case "mc": //メモリークリアボタン
+//            memoryClearButtonTappled(tappedButtonTitle)
+        default: //クリアボタン
             clearButtonTapped(tappedButtonTitle)
         }
     }
