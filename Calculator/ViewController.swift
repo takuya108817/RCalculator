@@ -34,7 +34,7 @@ class ViewController: UIViewController {
         let buttonMargin = 12.0
         //ボタン間の余白（縦）
         let buttonMarginHeight = 20.0
-    
+        
         
         
         //計算結果エリア
@@ -77,15 +77,15 @@ class ViewController: UIViewController {
         
         //ボタンのラベルタイトルを配列で用意
         let buttonLabels = [
-//        "mc","m+","m-","mr",
-        "","","","",
-//        "c","+/-","÷","×",
-        "c","","÷","×",
-        "7","8","9","−",
-        "4","5","6","+",
-        "1","2","3","=",
-        "0","",".","",
-        ]
+            //        "mc","m+","m-","mr",
+            "","","","",
+            //        "c","+/-","÷","×",
+            "c","","÷","×",
+            "7","8","9","−",
+            "4","5","6","+",
+            "1","2","3","=",
+            "0","",".","",
+            ]
         
         
         //数字ボタンを作成
@@ -132,7 +132,7 @@ class ViewController: UIViewController {
                 self.view.addSubview(button)
             }
         }
-
+        
         
         //数字ボタン0を作成
         let button = UIButton()
@@ -172,7 +172,7 @@ class ViewController: UIViewController {
         //ボタンテキスト0を左揃え
         button.contentHorizontalAlignment = UIControlContentHorizontalAlignment.left
         button.titleEdgeInsets = UIEdgeInsetsMake(0, 26, 0, 0)   // タイトルに余白をつける
-
+        
         
         
         //数字ボタン"."(Point)を作成
@@ -193,7 +193,7 @@ class ViewController: UIViewController {
         let gradientPoint = CAGradientLayer()
         gradientPoint.frame = button.bounds
         let arrayColorsPoint = [colorWithRGBHex(0xFFFFFF, alpha: 0.2).cgColor as AnyObject,
-                           colorWithRGBHex(0x000000, alpha: 1.0).cgColor as AnyObject]
+                                colorWithRGBHex(0x000000, alpha: 1.0).cgColor as AnyObject]
         gradientPoint.colors = arrayColorsPoint
         buttonPoint.layer.insertSublayer(gradientPoint, at: 0)
         //ボタンを角丸にする
@@ -291,7 +291,7 @@ class ViewController: UIViewController {
             //ボタン配置
             self.view.addSubview(buttonOperator)
         }
-
+        
         
         
         //等号ボタンを作成
@@ -382,36 +382,37 @@ class ViewController: UIViewController {
     // 各種メソッド
     ///////////////////////////////////////////////////////////////////
     //ボタンがタップされた時のメソッド（計算処理など）
-    @objc func buttonTapped(_ sender:UIButton) {
-        let tappedButtonTitle:String = sender.currentTitle!
+    @objc func buttonTapped(_ sender: UIButton) {
+        let tappedButtonTitle: String = sender.currentTitle!
         print("\(tappedButtonTitle)ボタンが押されました！")
         //ボタンのタイトルで条件分岐
         switch tappedButtonTitle {
-            case "0","1","2","3","4","5","6","7","8","9":   //数字ボタン
+        case "0","1","2","3","4","5","6","7","8","9":   //数字ボタン
             numberButtonTapped(tappedButtonTitle)
-            case "×","-","+","÷":                           //演算子ボタン
+        case "×","-","+","÷":                           //演算子ボタン
             operatorButtonTapped(tappedButtonTitle)
             //case "+/-":                                     //正負ボタン（表示してある数字を正数にしたり負数にしたり）
-            //plusMinusButtonTapped(tappedButtonTitle)
-            case "=":                                       //等号ボタン
+        //plusMinusButtonTapped(tappedButtonTitle)
+        case "=":                                       //等号ボタン
             equalButtonTapped(tappedButtonTitle)
             //case "m+","m-":                                 //メモリー演算ボタン（直前の計算結果をメモリーに足す・引く）
             //memoryOperatorButtonTapped(tappedButtonTitle)
             //case "mr";                                      //メモリーリコールボタン（これまでのメモリー計算の結果を呼び出す）
             //memoryRecallButtonTapped(tappedButtonTitle)
             //case "mc":                                      //メモリークリアボタン
-            //memoryClearButtonTappled(tappedButtonTitle)
+        //memoryClearButtonTappled(tappedButtonTitle)
         default:                                            //クリアボタン
             clearButtonTapped(tappedButtonTitle)
         }
     }
     
     
-
-    func numberButtonTapped(_ tappedButtonTitle:String) {
+    
+    //////////////////////////
+    func numberButtonTapped(_ tappedButtonTitle: String) {
         print("数字ボタンタップ：\(tappedButtonTitle)")
         //タップされた数字タイトルを計算できるようにNSDecimalNumber型に変換
-        let tappedButtonNum:NSDecimalNumber = NSDecimalNumber(string:tappedButtonTitle)
+        let tappedButtonNum: NSDecimalNumber = NSDecimalNumber(string: tappedButtonTitle)
         //入力されていた値を10倍にして1桁大きくして、その変換した数値を加算
         number1 = number1.multiplying(by: NSDecimalNumber(string: "10")).adding(tappedButtonNum)
         //number1をカンマ区切りに変換
@@ -420,9 +421,8 @@ class ViewController: UIViewController {
         formatter.groupingSeparator = ","
         formatter.groupingSize = 3
         _ = formatter.string(from: number1)
-        resultLabel.text = formatter.string(from: number1 as NSNumber) //カンマ区切りにしたnumber1を計算結果ラベルに表示0219
         //計算結果ラベルに表示
-        //resultLabel.text = number1.stringValue
+        resultLabel.text = formatter.string(from: number1 as NSNumber)
     }
     
     
@@ -438,34 +438,34 @@ class ViewController: UIViewController {
     func equalButtonTapped(_ tappedButtonTitle:String) {
         print("等号ボタンタップ：\(tappedButtonTitle)")
         switch operatorId {
-            case "+":
-                result = number2.adding(number1)
-            case "-":
-                result = number2.subtracting(number1)
-            case "×":
-                result = number2.multiplying(by: number1)
-            case "÷":
-                if(number1.isEqual(to: 0)) {
-                    number1 = 0
-                    resultLabel.text = "無限大"
-                    return
-                } else {
-                    result = number2.dividing(by: number1)
-                }
+        case "+":
+            result = number2.adding(number1)
+        case "-":
+            result = number2.subtracting(number1)
+        case "×":
+            result = number2.multiplying(by: number1)
+        case "÷":
+            if number1.isEqual(to: 0) {
+                number1 = 0
+                resultLabel.text = "∞"
+                return
+            } else {
+                result = number2.dividing(by: number1)
+            }
         default:
             print("その他")
         }
-        number1 = result //表示はされない内部の箱number1に結果変数resultを代入しているだけ（今後の計算のために）
-        
+        //表示はされない内部の箱number1に変数resultを代入（今後の計算のために）
+        number1 = result
+       
         //resultをカンマ区切りに変換0219
         let formatter = NumberFormatter()
         formatter.numberStyle = NumberFormatter.Style.decimal
         formatter.groupingSeparator = ","
         formatter.groupingSize = 3
         _ = formatter.string(from: result)
-        resultLabel.text = formatter.string(from: result as NSNumber) //カンマ区切りにしたresultを計算結果ラベルに表示0219
         //計算結果ラベルに表示
-        //resultLabel.text = String("\(result)")
+        resultLabel.text = formatter.string(from: result as NSNumber)
     }
     
     
@@ -478,7 +478,7 @@ class ViewController: UIViewController {
         resultLabel.text = "0"
     }
     
-
+    
     //HEX値で設定するためのメソッド
     func colorWithRGBHex(_ hex: Int, alpha: Float = 1.0) -> UIColor {
         let r = Float((hex >> 16) & 0xFF)
