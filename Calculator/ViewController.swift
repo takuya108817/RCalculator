@@ -10,7 +10,6 @@ import UIKit
 import QuartzCore
 
 class ViewController: UIViewController {
-    
     var resultOutLabel = UILabel() //resultLabelの右端に余白をつけるために設置20180219
     var resultLabel = UILabel()
     let xButtonCount = 4    //1行に配置するボタンの数
@@ -24,19 +23,16 @@ class ViewController: UIViewController {
 ////////////////////////////////////////////////////////////////////////////////////////////////
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-
         //画面の背景色を設定
         self.view.backgroundColor = UIColor(hexString: "#232321") //hexString値でも指定できるようにした0219
-        //self.view.backgroundColor = UIColor(red: 0.12, green: 0.12, blue: 0.12, alpha: 1.0)
         //画面の横幅を格納するメンバ変数
         let screenWidth:Double = Double(UIScreen.main.bounds.size.width)
         //画面の縦幅
         let screenHeight:Double = Double(UIScreen.main.bounds.size.height)
-        //ボタン間の余白（縦）＆（横）
+        //ボタン間の余白（横）
         let buttonMargin = 12.0
+        //ボタン間の余白（縦）＆
         let buttonMarginHeight = 20.0
-        
     
         
         //計算結果エリアの縦幅を宣言（）
