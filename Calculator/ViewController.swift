@@ -21,7 +21,7 @@ class ViewController: UIViewController {
     var operatorId: String = ""  //演算子を格納する変数
     
     
-////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////
     override func viewDidLoad() {
         super.viewDidLoad()
         //画面の背景色を設定(hexString値）
@@ -35,24 +35,26 @@ class ViewController: UIViewController {
         //ボタン間の余白（縦）
         let buttonMarginHeight = 20.0
     
-        //計算結果エリアの縦幅
+        
+        
+        //計算結果エリア
+        //縦幅
         var resultArea: Double = 0.0
         //画面全体の縦幅に応じて計算結果表示エリアの縦幅を決定
         switch screenHeight {
-        case 480:
-            resultArea = 90.0 //iPhone,3G,4S
         case 568:
-            resultArea = 110.0 //iphone5,SE
+            resultArea = 110.0 //iphone5,5s,5c,SE
         case 667:
-            resultArea = 150.0 //iPhone6
+            resultArea = 150.0 //iPhone6,6S,7,8
         case 736:
-            resultArea = 180.0 //iPhone8 Plus
+            resultArea = 180.0 //iPhone6Plus,6sPlus,7Plus,8Plus
         default:
             resultArea = 0.0
         }
         
         
-        /*計算結果ラベルの設定*/
+        
+        /* 計算結果ラベルの設定 */
         //フレームを設定
         resultLabel.frame = CGRect(x:10, y:20, width:screenWidth-20, height:resultArea-20)
         //背景色を設定
@@ -370,8 +372,15 @@ class ViewController: UIViewController {
     }
     
     
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
     
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    
+    ///////////////////////////////////////////////////////////////////
+    // 各種メソッド
+    ///////////////////////////////////////////////////////////////////
     //ボタンがタップされた時のメソッド（計算処理など）
     @objc func buttonTapped(_ sender:UIButton) {
         let tappedButtonTitle:String = sender.currentTitle!
@@ -398,6 +407,7 @@ class ViewController: UIViewController {
     }
     
     
+
     func numberButtonTapped(_ tappedButtonTitle:String) {
         print("数字ボタンタップ：\(tappedButtonTitle)")
         //タップされた数字タイトルを計算できるようにNSDecimalNumber型に変換
@@ -475,12 +485,6 @@ class ViewController: UIViewController {
         let g = Float((hex >> 8) & 0xFF)
         let b = Float((hex) & 0xFF)
         return UIColor(red: CGFloat(r / 255.0), green: CGFloat(g / 255.0), blue: CGFloat(b / 255.0), alpha: CGFloat(alpha))
-    }
-    
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 }
 

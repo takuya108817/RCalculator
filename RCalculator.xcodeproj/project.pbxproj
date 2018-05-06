@@ -61,7 +61,7 @@
 			children = (
 				B0B455A3209F54BD006940FD /* Default-568h@2x.png */,
 				B0D567E7204673030067583D /* InfoPlist.strings */,
-				B090F15E1CC6584900CA05EF /* RCalculator */,
+				B090F15E1CC6584900CA05EF /* Calculator */,
 				B090F15D1CC6584900CA05EF /* Products */,
 			);
 			sourceTree = "<group>";
@@ -74,7 +74,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		B090F15E1CC6584900CA05EF /* RCalculator */ = {
+		B090F15E1CC6584900CA05EF /* Calculator */ = {
 			isa = PBXGroup;
 			children = (
 				B090F15F1CC6584900CA05EF /* AppDelegate.swift */,
@@ -86,7 +86,6 @@
 				B090F1681CC6584900CA05EF /* LaunchScreen.storyboard */,
 				B090F16B1CC6584900CA05EF /* Info.plist */,
 			);
-			name = RCalculator;
 			path = Calculator;
 			sourceTree = "<group>";
 		};
