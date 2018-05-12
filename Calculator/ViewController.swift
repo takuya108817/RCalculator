@@ -10,20 +10,22 @@ import UIKit
 import QuartzCore
 
 class ViewController: UIViewController {
-    var resultOutLabel = UILabel() //resultLabelの右端に余白をつけるために設置20180219
+    var resultOutLabel = UILabel() //resultLabelの右端に余白をつけるために設置
     var resultLabel = UILabel()
     let xButtonCount = 4    //1行に配置するボタンの数
     let yButtonCount = 6    //1列に配置するボタンの数
-    var number1: NSDecimalNumber = 0.0    //入力数値を格納する変数１
-    var number2: NSDecimalNumber = 0.0    //入力数値を格納する変数２
+    var number1: Double = 0.0    //入力数値を格納する変数１
+    var number2: Double = 0.0    //入力数値を格納する変数２
     //var number3:NSDecimalNumber = 0.0   //メモリーキーに格納する変数３
-    var result: NSDecimalNumber = 0.0     //計算結果を格納する変数
+    var result: Double = 0.0     //計算結果を格納する変数
     var operatorId: String = ""  //演算子を格納する変数
+    var pointCount: Double = 0.0
     
     
     /////////////////////////////////////////////////////////////////////////////
     override func viewDidLoad() {
         super.viewDidLoad()
+        //MARK: 画面のレイアウトを設定
         //画面の背景色を設定(hexString値）
         self.view.backgroundColor = UIColor(hexString: "#232321")
         //画面の横幅を格納するメンバ変数
@@ -37,7 +39,7 @@ class ViewController: UIViewController {
         
         
         
-        //計算結果エリア
+        //MARK: 計算結果エリア
         //縦幅
         var resultArea: Double = 0.0
         //画面全体の縦幅に応じて計算結果表示エリアの縦幅を決定
@@ -54,7 +56,7 @@ class ViewController: UIViewController {
         
         
         
-        /* 計算結果ラベルの設定 */
+        // MARK: 計算結果ラベルの設定
         //フレームを設定
         resultLabel.frame = CGRect(x:10, y:20, width:screenWidth-20, height:resultArea-20)
         //背景色を設定
@@ -75,7 +77,7 @@ class ViewController: UIViewController {
         self.view.addSubview(resultLabel)
         
         
-        //ボタンのラベルタイトルを配列で用意
+        //MARK: ボタンのラベルタイトルを配列で用意
         let buttonLabels = [
             //        "mc","m+","m-","mr",
             "","","","",
@@ -88,7 +90,7 @@ class ViewController: UIViewController {
             ]
         
         
-        //数字ボタンを作成
+        //MARK: 数字ボタン1~9を作成
         for y in 2 ..< yButtonCount-1 {
             for x in 0 ..< xButtonCount-1 {
                 //計算機のボタンを作成
@@ -134,7 +136,7 @@ class ViewController: UIViewController {
         }
         
         
-        //数字ボタン0を作成
+        //MARK: 数字ボタン0を作成
         let button = UIButton()
         //ボタンタイトルのフォントサイズ
         button.titleLabel!.font = UIFont(name: "Helvetica-Bold",size: CGFloat(23))
@@ -175,7 +177,7 @@ class ViewController: UIViewController {
         
         
         
-        //数字ボタン"."(Point)を作成
+        //MARK: 数字ボタン"."(Point)を作成
         let buttonPoint = UIButton()
         //ボタンタイトルのフォントサイズ
         buttonPoint.titleLabel!.font = UIFont(name: "Helvetica-Bold",size: CGFloat(23))
@@ -213,7 +215,7 @@ class ViewController: UIViewController {
         
         
         
-        //演算ボタンを作成
+        //MARK: 演算ボタンを作成
         for y in 1 ..< yButtonCount-4 {
             for x in 0 ..< xButtonCount {
                 //計算機のボタンを作成
@@ -258,7 +260,7 @@ class ViewController: UIViewController {
         
         
         
-        //演算ボタンの-と+を作成（無理やり）
+        //MARK: 演算ボタンの-と+を作成（無理やり）
         for y in 2 ..< 4 {
             let buttonOperator = UIButton()
             //ボタンタイトルのフォントサイズ
@@ -294,7 +296,7 @@ class ViewController: UIViewController {
         
         
         
-        //等号ボタンを作成
+        //MARK: 等号ボタンを作成
         let buttonEqual = UIButton()
         //ボタンタイトルのフォントサイズ
         buttonEqual.titleLabel!.font = UIFont(name: "Helvetica-Bold",size: CGFloat(28))
@@ -328,7 +330,7 @@ class ViewController: UIViewController {
         
         
         
-        //メモリーボタンを作成
+        //MARK: メモリーボタンを作成
         for y in 0 ..< 1 {
             for x in 0 ..< xButtonCount {
                 //計算機のボタンを作成
@@ -380,15 +382,15 @@ class ViewController: UIViewController {
     
     
     ///////////////////////////////////////////////////////////////////
-    // 各種メソッド
+    // MARK: //各種メソッド //
     ///////////////////////////////////////////////////////////////////
-    //ボタンがタップされた時のメソッド（計算処理など）
+    //MARK: ボタンがタップされた時のメソッド（計算処理など）
     @objc func buttonTapped(_ sender: UIButton) {
         let tappedButtonTitle: String = sender.currentTitle!
         print("\(tappedButtonTitle)ボタンが押されました！")
         //ボタンのタイトルで条件分岐
         switch tappedButtonTitle {
-        case "0","1","2","3","4","5","6","7","8","9":
+        case "0","1","2","3","4","5","6","7","8","9",".":
             numberButtonTapped(tappedButtonTitle)
         case "×","-","+","÷":
             operatorButtonTapped(tappedButtonTitle)
@@ -409,49 +411,80 @@ class ViewController: UIViewController {
     
     
     
-    //////////////////////////
+    //MARK: 数字ボタンタップ
     func numberButtonTapped(_ tappedButtonTitle: String) {
         print("数字ボタンタップ：\(tappedButtonTitle)")
-        //タップされた数字タイトルを計算できるようにNSDecimalNumber型に変換
-        let tappedButtonNum: NSDecimalNumber = NSDecimalNumber(string: tappedButtonTitle)
-        //入力されていた値を10倍にして1桁大きくして、その変換した数値を加算
-        number1 = number1.multiplying(by: NSDecimalNumber(string: "10")).adding(tappedButtonNum)
+        switch tappedButtonTitle {
+        case "0","1","2","3","4","5","6","7","8","9":
+            if pointCount >= 1 {
+                let tappedButtonNum: Double = (tappedButtonTitle as NSString).doubleValue
+                number1 = number1 + tappedButtonNum / pow(10, pointCount)
+                pointCount += 1
+            } else {
+                //タップされた数字タイトルを計算できるようにNSDecimalNumber型に変換
+                let tappedButtonNum: Double = (tappedButtonTitle as NSString).doubleValue
+                //入力されていた値を10倍にして1桁大きくして、その変換した数値を加算
+                number1 = number1 * 10 + tappedButtonNum
+            }
+            
+        case ".":
+            if pointCount >= 1 {
+                fallthrough
+            } else {
+                pointCount += 1
+                let tappedButtonNum: Double = 0.0
+                number1 = number1 + (tappedButtonNum)
+            }
+        
+        default:
+            print("Other button tapped.")
+        }
+        
         //number1をカンマ区切りに変換
-        let formatter = NumberFormatter()
-        formatter.numberStyle = NumberFormatter.Style.decimal
-        formatter.groupingSeparator = ","
-        formatter.groupingSize = 3
-        _ = formatter.string(from: number1)
+//        let formatter = NumberFormatter()
+//        formatter.numberStyle = NumberFormatter.Style.decimal
+//        formatter.groupingSeparator = ","
+//        formatter.groupingSize = 3
+//        _ = formatter.string(from: number1)
+        
+        
         //計算結果ラベルに表示
-        resultLabel.text = formatter.string(from: number1 as NSNumber)
+//        resultLabel.text = formatter.string(from: number1 as NSNumber)
+        resultLabel.text = String(describing: number1)
+        
     }
     
     
+    
+    
+    //MARK: 演算ボタンタップ
     func operatorButtonTapped(_ tappedButtonTitle:String) {
         print("演算子ボタンタップ：\(tappedButtonTitle)")
+        pointCount = 0
         operatorId = tappedButtonTitle
         number2 = number1
-        number1 = NSDecimalNumber(string: "0")
+        number1 = 0.0
         //等号ボタンを押さずに、続けて演算子ボタンを押しても計算できるようにコードを記述する必要がある
     }
     
-    
+    //MARK: 等号ボタンタップ
     func equalButtonTapped(_ tappedButtonTitle:String) {
         print("等号ボタンタップ：\(tappedButtonTitle)")
+        pointCount = 0
         switch operatorId {
         case "+":
-            result = number2.adding(number1)
+            result = number2 + (number1)
         case "-":
-            result = number2.subtracting(number1)
+            result = number2 - (number1)
         case "×":
-            result = number2.multiplying(by: number1)
+            result = number2 * number1
         case "÷":
             if number1.isEqual(to: 0) {
                 number1 = 0
                 resultLabel.text = "∞"
                 return
             } else {
-                result = number2.dividing(by: number1)
+                result = number2 / number1
             }
         default:
             print("その他")
@@ -459,28 +492,31 @@ class ViewController: UIViewController {
         //表示はされない内部の箱number1に変数resultを代入（今後の計算のために）
         number1 = result
        
-        //resultをカンマ区切りに変換0219
-        let formatter = NumberFormatter()
-        formatter.numberStyle = NumberFormatter.Style.decimal
-        formatter.groupingSeparator = ","
-        formatter.groupingSize = 3
-        _ = formatter.string(from: result)
+        //resultをカンマ区切りに変換
+//        let formatter = NumberFormatter()
+//        formatter.numberStyle = NumberFormatter.Style.decimal
+//        formatter.groupingSeparator = ","
+//        formatter.groupingSize = 3
+//        _ = formatter.string(from: result)
         //計算結果ラベルに表示
-        resultLabel.text = formatter.string(from: result as NSNumber)
+//        resultLabel.text = formatter.string(from: result as NSNumber)
+        resultLabel.text = String(result)
     }
     
     
+    //MARK: クリアボタンタップ
     func clearButtonTapped(_ tappedButtonTitle:String) {
         print("クリアボタンタップ：\(tappedButtonTitle)")
-        number1 = NSDecimalNumber(string:"0")
-        number2 = NSDecimalNumber(string:"0")
-        result = NSDecimalNumber(string:"0")
+        pointCount = 0
+        number1 = 0.0
+        number2 = 0.0
+        result = 0.0
         operatorId = ""
         resultLabel.text = "0"
     }
     
     
-    //HEX値で設定するためのメソッド
+    //MARK: HEX値で設定するためのメソッド
     func colorWithRGBHex(_ hex: Int, alpha: Float = 1.0) -> UIColor {
         let r = Float((hex >> 16) & 0xFF)
         let g = Float((hex >> 8) & 0xFF)
@@ -488,4 +524,6 @@ class ViewController: UIViewController {
         return UIColor(red: CGFloat(r / 255.0), green: CGFloat(g / 255.0), blue: CGFloat(b / 255.0), alpha: CGFloat(alpha))
     }
 }
+
+
 
